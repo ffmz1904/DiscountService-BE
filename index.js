@@ -2,6 +2,7 @@ const dotenv = require('dotenv');
 const express = require('express');
 const mongoose = require('mongoose');
 const router = require('./routes');
+const errorHandler = require('./middlewares/errorHandler');
 
 dotenv.config();
 const PORT = process.env.PORT || 8000;
@@ -10,6 +11,7 @@ const app = express();
 app.use(express.json());
 
 app.use('/', router);
+app.use(errorHandler);
 
 const start = async () => {
     try {
