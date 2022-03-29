@@ -11,6 +11,16 @@ class OrganizationController {
         }
     }
 
+    async getById(req, res, next) {
+        try {
+            const id = req.params.id;
+            const organization = await OrganizationService.getOrganizationById(id);
+            res.status(200).json(organization);
+        } catch (e) {
+            next(e);
+        }
+    }
+
     async getAll(req, res, next) {
         try {
             const organizations = await OrganizationService.getOrganizations();
