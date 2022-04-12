@@ -4,12 +4,13 @@ const ApiError = require('../exceptions/ApiError');
 const AdminModel = require('../models/adminModel');
 
 class AdminService {
-    async createAdmin(email, password) {
-        const hashPass = await bcrypt.hash(password, Number(process.env.BCRYPT_SALT));
+    async createAdmin(user, organizationId) {
+        const hashPass = await bcrypt.hash(user.password, Number(process.env.BCRYPT_SALT));
         await AdminModel.create({
             password: hashPass,
             status: ADMIN_STATUS.ADMIN,
-            email,
+            email: user.email,
+            organizationId
         })
     }
 

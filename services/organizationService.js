@@ -2,10 +2,10 @@ const ApiError = require('../exceptions/ApiError');
 const OrganizationModel = require('../models/organizationModel');
 
 class OrganizationService {
-    async createOrganization(name, description) {
+    async createOrganization(organizationData) {
         const organization = await OrganizationModel.create({
-           name,
-           description,
+            name: organizationData.name,
+            description: organizationData.description,
         });
         return organization;
     }
