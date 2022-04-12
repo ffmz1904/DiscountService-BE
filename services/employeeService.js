@@ -2,15 +2,16 @@ const ApiError = require('../exceptions/ApiError');
 const EmployeeModel = require('../models/employeeModel');
 
 class EmployeeService {
-    async createEmployee(name, organizationId) {
+    async createEmployee(name, organizationId, birthday) {
         return EmployeeModel.create({
             fullName: name,
             organizationId,
+            birthday,
         });
     }
 
-    async getEmployees() {
-        return EmployeeModel.find();
+    async getEmployees(filters) {
+        return EmployeeModel.find({...filters});
     }
 
     async getEmployeeById(id) {

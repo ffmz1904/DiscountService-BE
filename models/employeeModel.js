@@ -12,6 +12,10 @@ const employeeSchema = new Schema({
         type: String,
         required: true,
     },
+    birthday: {
+        type: String,
+        required: true,
+    }
 }, {versionKey: false});
 
 module.exports = model('Employee', employeeSchema);

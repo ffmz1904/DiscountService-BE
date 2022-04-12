@@ -3,8 +3,8 @@ const EmployeeService = require('../services/employeeService');
 class EmployeeController {
     async create(req, res, next) {
         try {
-            const {name, organizationId} = req.body;
-            const employee = await EmployeeService.createEmployee(name, organizationId);
+            const {name, organizationId, birthday} = req.body;
+            const employee = await EmployeeService.createEmployee(name, organizationId, birthday);
             res.status(200).json(employee);
         } catch (e) {
             next(e);
@@ -25,6 +25,16 @@ class EmployeeController {
             const id = req.params.id;
             const employee = await EmployeeService.getEmployeeById(id);
             res.status(200).json(employee);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    async getEmployeesForOrganization(req, res, next) {
+        try {
+            const id = req.params.id;
+            const employees = await EmployeeService.getEmployees({organizationId: id});
+            res.status(200).json(employees);
         } catch (e) {
             next(e);
         }
