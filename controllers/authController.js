@@ -1,5 +1,6 @@
 const AdminService = require('../services/adminService');
 const OrganizationService = require('../services/organizationService');
+const TokenService = require('../services/tokenService');
 
 class AuthController {
     async registration(req, res, next) {
@@ -20,7 +21,15 @@ class AuthController {
         try {
             const {email, password} = req.body;
             const admin = await AdminService.getAdminByEmailAndPassword(email, password);
-            res.status(200).json(admin);
+            const tokens = TokenService.generateTokens({
+                id: admin._id,
+                email: admin.email,
+                organizationId: admin.organizationId
+            });
+            res.status(200).json({
+                admin,
+                tokens,
+            });
         } catch (e) {
             next(e);
         }
