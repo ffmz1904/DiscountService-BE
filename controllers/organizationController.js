@@ -29,6 +29,16 @@ class OrganizationController {
             next(e);
         }
     }
+
+    async getMyOrganization(req, res, next) {
+        try {
+            const user = req.user;
+            const organizations = await OrganizationService.getOrganizationById(user.organizationId);
+            res.status(200).json(organizations);
+        } catch (e) {
+            next(e);
+        }
+    }
 }
 
 module.exports = new OrganizationController();

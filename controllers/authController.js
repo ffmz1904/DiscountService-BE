@@ -34,6 +34,20 @@ class AuthController {
             next(e);
         }
     }
+
+    async authorize(req, res, next) {
+        try {
+            const user = req.user;
+            if  (!user) {
+                return res.status(401).json();
+            }
+
+            const admin = await AdminService.getAdminById(user.id);
+            res.status(200).json(admin);
+        } catch (e) {
+            next(e);
+        }
+    }
 }
 
 module.exports = new AuthController();

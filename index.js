@@ -1,6 +1,7 @@
 const dotenv = require('dotenv');
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const router = require('./routes');
 const errorHandler = require('./middlewares/errorHandler');
 
@@ -9,6 +10,10 @@ const PORT = process.env.PORT || 8000;
 
 const app = express();
 app.use(express.json());
+app.use(cors({
+    credential: true,
+    origin: process.env.CLIENT_URL
+}));
 
 app.use('/api', router);
 app.use(errorHandler);

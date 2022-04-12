@@ -27,6 +27,14 @@ class AdminService {
 
         return AdminModel.findOne({ email });
     }
+
+    async getAdminById(id) {
+        const admin = await AdminModel.findById(id);
+        if (!admin) {
+            throw ApiError.notFound('Undefined user');
+        }
+        return admin;
+    }
 }
 
 module.exports = new AdminService();

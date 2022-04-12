@@ -6,6 +6,8 @@ const organizationRouter = new Router();
 
 // organizationRouter.post('/', OrganizationController.create);
 organizationRouter.get('/', isAuth, OrganizationController.getAll);
+organizationRouter.get('/my', isAuth, OrganizationController.getMyOrganization);
 organizationRouter.get('/:id', isAuth, OrganizationController.getById);
+
 
 module.exports = organizationRouter;
