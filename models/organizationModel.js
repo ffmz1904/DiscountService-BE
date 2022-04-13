@@ -19,6 +19,11 @@ const organizationSchema = new Schema({
     images: {
         type: Array,
         default: [],
+    },
+    discounts: {
+        type: Array,
+        default: [],
+        // must be an object like { for: id, percent: 5 }
     }
 }, {versionKey: false});
 
