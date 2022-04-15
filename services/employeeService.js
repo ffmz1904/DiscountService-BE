@@ -21,6 +21,25 @@ class EmployeeService {
         }
         return employee;
     }
+
+    async updateEmployee(id, updateData) {
+        const employeeData = await EmployeeModel.findById(id);
+        if (!employeeData) {
+            throw ApiError.notFound('Employee not found');
+        }
+
+        const employee = await EmployeeModel.findByIdAndUpdate(id, { ...updateData }, {new: true});
+        return employee;
+    }
+
+    async removeEmployee(id) {
+        const employeeData = await EmployeeModel.findById(id);
+        if (!employeeData) {
+            throw ApiError.notFound('Employee not found');
+        }
+        await EmployeeModel.findByIdAndDelete(id);
+        return id;
+    }
 }
 
 module.exports = new EmployeeService();

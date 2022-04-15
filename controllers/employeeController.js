@@ -39,6 +39,30 @@ class EmployeeController {
             next(e);
         }
     }
+
+    async updateEmployee(req, res, next) {
+        try {
+            const id = req.params.id;
+            const updateData = req.body;
+            const employee = await EmployeeService.updateEmployee(id, updateData);
+            res.status(200).json(employee);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    async removeEmployee(req, res, next) {
+        try {
+            const id = req.params.id;
+            const employeeId = await EmployeeService.removeEmployee(id);
+            res.status(200).json({
+                success: true,
+                removedId: employeeId,
+            });
+        } catch (e) {
+            next(e);
+        }
+    }
 }
 
 module.exports = new EmployeeController();
