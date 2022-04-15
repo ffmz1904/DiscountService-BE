@@ -10,8 +10,8 @@ class OrganizationService {
         return organization;
     }
 
-    async getOrganizations() {
-        return OrganizationModel.find();
+    async getOrganizations(userOrgId) {
+        return OrganizationModel.find({'_id': {$ne: userOrgId}});
     }
 
     async getOrganizationById(id) {

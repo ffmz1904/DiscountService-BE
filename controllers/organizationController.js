@@ -23,7 +23,8 @@ class OrganizationController {
 
     async getAll(req, res, next) {
         try {
-            const organizations = await OrganizationService.getOrganizations();
+            const userOrgId = req.user.organizationId;
+            const organizations = await OrganizationService.getOrganizations(userOrgId);
             res.status(200).json(organizations);
         } catch (e) {
             next(e);
