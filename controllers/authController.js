@@ -10,8 +10,17 @@ class AuthController {
                 user,
             } = req.body;
             const organizationData = await OrganizationService.createOrganization(organization)
-            await AdminService.createAdmin(user, organizationData._id);
-            res.status(200).json({ success: true });
+            const admin = await AdminService.createAdmin(user, organizationData._id);
+            const tokens = TokenService.generateTokens({
+                id: admin._id,
+                email: admin.email,
+                organizationId: admin.organizationId
+            });
+            res.status(200).json({
+                success: true,
+                admin,
+                tokens,
+            });
         } catch (e) {
             next(e);
         }

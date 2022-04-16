@@ -6,12 +6,13 @@ const AdminModel = require('../models/adminModel');
 class AdminService {
     async createAdmin(user, organizationId) {
         const hashPass = await bcrypt.hash(user.password, Number(process.env.BCRYPT_SALT));
-        await AdminModel.create({
+        const admin = await AdminModel.create({
             password: hashPass,
             status: ADMIN_STATUS.ADMIN,
             email: user.email,
             organizationId
-        })
+        });
+        return admin;
     }
 
     async getAdminByEmailAndPassword(email, password) {
