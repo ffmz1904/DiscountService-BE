@@ -24,18 +24,7 @@ class OrganizationController {
     async getAll(req, res, next) {
         try {
             const userOrgId = req.user.organizationId;
-            const organizationsData = await OrganizationService.getOrganizations(userOrgId);
-            const myOrg = await OrganizationService.getOrganizationById(userOrgId);
-
-            const organizations = [];
-            for(let organization of organizationsData) {
-                const discount = myOrg.discounts.filter(el => el.id === organization._id.toString())[0];
-                if (discount) {
-                    organizations.push({ ...organization.toObject(), discountForOrg: discount.percent });
-                } else {
-                    organizations.push({ ...organization.toObject(), discountForOrg: null });
-                }
-            }
+            const organizations = await OrganizationService.getOrganizations(userOrgId);
             res.status(200).json(organizations);
         } catch (e) {
             next(e);
