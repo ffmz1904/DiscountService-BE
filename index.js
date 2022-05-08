@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const router = require('./routes');
 const errorHandler = require('./middlewares/errorHandler');
+const path = require("path");
 
 dotenv.config();
 const PORT = process.env.PORT || 8000;
@@ -14,6 +15,8 @@ app.use(cors({
     credential: true,
     origin: process.env.CLIENT_URL
 }));
+
+app.use(express.static(path.join(__dirname, 'assets')));
 
 app.use('/api', router);
 app.use(errorHandler);

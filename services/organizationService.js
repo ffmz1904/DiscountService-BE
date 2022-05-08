@@ -1,6 +1,7 @@
 const ApiError = require('../exceptions/ApiError');
 const OrganizationModel = require('../models/organizationModel');
 const EmployeeModel = require('../models/employeeModel');
+const deleteFile = require('../utils/deleteFile');
 
 class OrganizationService {
     async createOrganization(organizationData) {
@@ -49,6 +50,24 @@ class OrganizationService {
             ...organization.toObject(),
             employeesCount,
         };
+    }
+
+    async updateOrganizationById(id, updateData = {}) {
+        const organizationData = await OrganizationModel.findById(id);
+        if (!organizationData) {
+            throw ApiError.notFound('Organization not found');
+        }
+
+        if (updateData.logo) {
+            await deleteFile(organizationData.logo);
+        }
+
+        const organization = await OrganizationModel.findByIdAndUpdate(id, {...updateData}, { new: true });
+        const employeesCount = await this.getCountOfEmployees(organization._id);
+        return {
+            ...organization.toObject(),
+            employeesCount,
+        }
     }
 
     async getCountOfEmployees(orgId) {

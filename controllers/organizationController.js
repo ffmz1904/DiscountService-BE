@@ -40,6 +40,23 @@ class OrganizationController {
             next(e);
         }
     }
+
+    async updateMyOrg(req, res, next) {
+        try {
+            const user = req.user;
+            const updateData = req.body;
+
+            if (req.file) {
+                const imgPath = `organizations/${req.file.filename}`;
+                updateData.logo = imgPath;
+            }
+
+            const organizations = await OrganizationService.updateOrganizationById(user.organizationId, updateData);
+            res.status(200).json(organizations);
+        } catch (e) {
+            next(e);
+        }
+    }
 }
 
 module.exports = new OrganizationController();
