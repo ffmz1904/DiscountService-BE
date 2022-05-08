@@ -1,12 +1,14 @@
 const ApiError = require('../exceptions/ApiError');
 const EmployeeModel = require('../models/employeeModel');
+const deleteFile = require("../utils/deleteFile");
 
 class EmployeeService {
-    async createEmployee(name, organizationId, birthday) {
+    async createEmployee(name, organizationId, birthday, photo) {
         return EmployeeModel.create({
             fullName: name,
             organizationId,
             birthday,
+            photo,
         });
     }
 
@@ -26,6 +28,10 @@ class EmployeeService {
         const employeeData = await EmployeeModel.findById(id);
         if (!employeeData) {
             throw ApiError.notFound('Employee not found');
+        }
+
+        if (updateData.photo) {
+            await deleteFile(employeeData.photo);
         }
 
         const employee = await EmployeeModel.findByIdAndUpdate(id, { ...updateData }, {new: true});

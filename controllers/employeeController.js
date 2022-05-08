@@ -4,7 +4,13 @@ class EmployeeController {
     async create(req, res, next) {
         try {
             const {name, organizationId, birthday} = req.body;
-            const employee = await EmployeeService.createEmployee(name, organizationId, birthday);
+            let photo = null;
+            if (req.file) {
+                const imgPath = `employees/${req.file.filename}`;
+                photo = imgPath;
+            }
+
+            const employee = await EmployeeService.createEmployee(name, organizationId, birthday, photo);
             res.status(200).json(employee);
         } catch (e) {
             next(e);
@@ -44,6 +50,12 @@ class EmployeeController {
         try {
             const id = req.params.id;
             const updateData = req.body;
+
+            if (req.file) {
+                const imgPath = `employees/${req.file.filename}`;
+                updateData.photo = imgPath;
+            }
+
             const employee = await EmployeeService.updateEmployee(id, updateData);
             res.status(200).json(employee);
         } catch (e) {
