@@ -17,8 +17,16 @@ app.use(cors({
 }));
 
 app.use(express.static(path.join(__dirname, 'assets')));
+app.use(express.static(path.join(__dirname, '..', 'fe', 'build')));
 
 app.use('/api', router);
+app.use('/*', (req, res, next) => {
+    try {
+        res.sendFile(path.join(__dirname, '..', 'fe', 'build', 'index.html'));
+    } catch (e) {
+        next(e);
+    }
+});
 app.use(errorHandler);
 
 const start = async () => {
