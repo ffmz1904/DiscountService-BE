@@ -3,14 +3,14 @@ const EmployeeService = require('../services/employeeService');
 class EmployeeController {
     async create(req, res, next) {
         try {
-            const {name, organizationId, birthday} = req.body;
+            const {name, organizationId, birthday, role} = req.body;
             let photo = null;
             if (req.file) {
                 const imgPath = `employees/${req.file.filename}`;
                 photo = imgPath;
             }
 
-            const employee = await EmployeeService.createEmployee(name, organizationId, birthday, photo);
+            const employee = await EmployeeService.createEmployee(name, organizationId, birthday, role, photo);
             res.status(200).json(employee);
         } catch (e) {
             next(e);

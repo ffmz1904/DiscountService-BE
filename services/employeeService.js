@@ -3,12 +3,13 @@ const EmployeeModel = require('../models/employeeModel');
 const deleteFile = require("../utils/deleteFile");
 
 class EmployeeService {
-    async createEmployee(name, organizationId, birthday, photo) {
+    async createEmployee(name, organizationId, birthday, role, photo) {
         return EmployeeModel.create({
             fullName: name,
             organizationId,
             birthday,
             photo,
+            role,
         });
     }
 

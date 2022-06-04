@@ -15,6 +15,10 @@ const employeeSchema = new Schema({
     birthday: {
         type: String,
         required: true,
+    },
+    role: {
+        type: Number,
+        required: true,
     }
 }, {versionKey: false});
 
