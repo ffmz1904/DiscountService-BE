@@ -33,7 +33,7 @@ class DiscountService {
             throw ApiError.notFound('Your organization not found');
         }
 
-        const discounts = organization.discounts.find(el => el.id !== orgId);
+        const discounts = organization.discounts.filter(el => el.id !== orgId);
         const updatedOrg = await OrganizationModel.findByIdAndUpdate(userOrgId, {discounts}, {new: true});
         return updatedOrg;
     }
