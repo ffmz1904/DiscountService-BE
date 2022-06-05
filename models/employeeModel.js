@@ -19,6 +19,10 @@ const employeeSchema = new Schema({
     role: {
         type: Number,
         required: true,
+    },
+    personalDiscounts: {
+        type: Array,
+        default: [],
     }
 }, {versionKey: false});
 
